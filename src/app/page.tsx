@@ -49,8 +49,8 @@ const mockApplications: Application[] = [
 
 export default function Home() {
   return (
-    <div>
-      <div className='flex justify-around'>
+    <div className='w-1/2 min-w-96'>
+      <div className='flex justify-between'>
         <h1>Apply Log</h1>
         <button>추가</button>
       </div>
