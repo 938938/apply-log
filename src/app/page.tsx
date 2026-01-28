@@ -1,4 +1,8 @@
+'use client';
+
+import AddModal from '@/components/AddModal';
 import { Application } from '@/model/type';
+import { useState } from 'react';
 
 const mockApplications: Application[] = [
   {
@@ -48,11 +52,13 @@ const mockApplications: Application[] = [
 ];
 
 export default function Home() {
+  const [open, setOpen] = useState<boolean>(false);
+  const [data, setData] = useState<Application[]>(mockApplications);
   return (
     <div className='w-1/2 min-w-96'>
       <div className='flex justify-between'>
         <h1>Apply Log</h1>
-        <button>추가</button>
+        <button onClick={() => setOpen(true)}>추가</button>
       </div>
       <div>
         <button>전체</button>
@@ -65,13 +71,13 @@ export default function Home() {
       <div className='flex'>
         <div>
           <h3>총 지원</h3>
-          <p>{mockApplications.length}</p>
+          <p>{data.length}</p>
         </div>
         <div>
           <h3>진행 중</h3>
           <p>
             {
-              mockApplications.filter(
+              data.filter(
                 (ele) => ele.status !== '합격' && ele.status !== '탈락',
               ).length
             }
@@ -79,20 +85,16 @@ export default function Home() {
         </div>
         <div>
           <h3>합격</h3>
-          <p>
-            {mockApplications.filter((ele) => ele.status === '합격').length}
-          </p>
+          <p>{data.filter((ele) => ele.status === '합격').length}</p>
         </div>
         <div>
           <h3>탈락</h3>
-          <p>
-            {mockApplications.filter((ele) => ele.status === '탈락').length}
-          </p>
+          <p>{data.filter((ele) => ele.status === '탈락').length}</p>
         </div>
       </div>
       <div>
         <ul>
-          {mockApplications.map((ele) => (
+          {data.map((ele) => (
             <li key={ele.id}>
               <h4>{ele.companyName}</h4>
               <p>{ele.status}</p>
@@ -106,6 +108,7 @@ export default function Home() {
           ))}
         </ul>
       </div>
+      {open && <AddModal setOpen={setOpen} setData={setData} />}
     </div>
   );
 }
