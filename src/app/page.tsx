@@ -110,7 +110,11 @@ export default function Home() {
               <tr key={ele.id}>
                 <td>{ele.companyName}</td>
                 <td>{ele.position}</td>
-                <td>{ele.jobPostUrl}</td>
+                <td>
+                  <a href={ele.jobPostUrl} target='_blank'>
+                    링크
+                  </a>
+                </td>
                 <td>{ele.appliedAt}</td>
                 <td>{ele.status}</td>
                 <td>{ele.memo}</td>
