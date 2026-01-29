@@ -93,20 +93,35 @@ export default function Home() {
         </div>
       </div>
       <div>
-        <ul>
-          {data.map((ele) => (
-            <li key={ele.id}>
-              <h4>{ele.companyName}</h4>
-              <p>{ele.status}</p>
-              <p>{ele.position}</p>
-              <p>채용 공고 : {ele.jobPostUrl}</p>
-              <p>지원일 : {ele.appliedAt}</p>
-              <p>{ele.memo}</p>
-              <button>수정</button>
-              <button>삭제</button>
-            </li>
-          ))}
-        </ul>
+        <table>
+          <thead>
+            <tr>
+              <th>회사명</th>
+              <th>포지션</th>
+              <th>채용공고</th>
+              <th>지원일</th>
+              <th>지원현황</th>
+              <th>메모</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((ele) => (
+              <tr key={ele.id}>
+                <td>{ele.companyName}</td>
+                <td>{ele.position}</td>
+                <td>{ele.jobPostUrl}</td>
+                <td>{ele.appliedAt}</td>
+                <td>{ele.status}</td>
+                <td>{ele.memo}</td>
+                <td>
+                  <button>수정</button>
+                  <button>삭제</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
       {open && <AddModal setOpen={setOpen} setData={setData} />}
     </div>
