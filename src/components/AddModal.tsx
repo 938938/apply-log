@@ -2,6 +2,7 @@
 
 import { Application } from '@/model/type';
 import { useState } from 'react';
+import StatusSelect from './StatusSelect';
 
 const AddModal = ({
   setOpen,
@@ -64,13 +65,10 @@ const AddModal = ({
 
           <div>
             <label>지원상태</label>
-            <select name='status' onChange={onChangeHandler}>
-              <option value='지원'>지원</option>
-              <option value='과제'>과제</option>
-              <option value='면접'>면접</option>
-              <option value='합격'>합격</option>
-              <option value='탈락'>탈락</option>
-            </select>
+            <StatusSelect
+              onChangeHandler={onChangeHandler}
+              defaultValue='지원'
+            />
           </div>
 
           <div>
