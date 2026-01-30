@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ApplyLog
 
-## Getting Started
+취업 준비 과정에서 지원한 회사와 진행 상황을 한눈에 관리하기 위한  
+개인 취준 관리 대시보드 프로젝트입니다.
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🔍 프로젝트 소개
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+취업 준비를 하면서 지원한 회사의 상태(지원, 과제, 면접 등)를  
+따로 관리하는 것이 불편하다고 느꼈습니다.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+ApplyLog는  
+지원 현황, 일정, 메모를 한 화면에서 확인하고  
+빠르게 상태를 관리할 수 있도록 돕는 대시보드입니다.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🎯 프로젝트 목표
 
-## Learn More
+- 지원 현황을 한눈에 파악할 수 있는 UI 제공
+- 상태 변경과 메모 작성이 빠른 관리 도구 구현
+- 불필요한 기능을 줄인 MVP 중심 설계
 
-To learn more about Next.js, take a look at the following resources:
+## 🛠 기술 스택
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Next.js (App Router)
+- TypeScript
+- Tailwind CSS
+- (예정) Redux Toolkit
+- (예정) React Query
+- (예정) Supabase
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## 🧩 주요 기능
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- 회사 / 포지션 / 지원일 등록
+- 진행 현황 관리 (지원, 과제, 면접, 합격, 탈락)
+- 테이블 기반 리스트 뷰
+- 상태별 필터 및 정렬
+- 지원 메모 관리
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## 🗂 화면 구성
+
+- 로그인 화면
+- 메인 대시보드
+  - 전체 지원 현황 요약
+  - 지원 리스트 테이블
+- 지원 추가 / 수정 모달
+
+## 🧠 설계 고민
+
+- 카드 UI보다 관리 효율이 높은 테이블 UI를 선택
+- 상태값을 enum 형태로 관리하여 필터링과 확장성을 고려
+- 사용자 입력을 최소화해 빠른 기록이 가능하도록 설계
+
+## 🚧 진행 상황
+
+- [x] 프로젝트 기획
+- [x] UI 와이어프레임
+- [x] 테이블 UI 구현
+- [x] CRUD 기능
+- [ ] 상태 필터 / 정렬
+- [ ] 회원 가입 및 로그인
+- [ ] 서버 데이터 연결
+- [ ] 리팩토링
+
+## 🔮 개선 및 확장 아이디어
+
+- Supabase 연동
+- 모바일 화면 최적화
+- 통계 리포트 추가
+
+## 📝 회고 (작성 예정)
+
+프로젝트 진행 중 겪은 문제와 해결 과정을 정리할 예정입니다.
