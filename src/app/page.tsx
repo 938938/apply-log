@@ -1,7 +1,7 @@
 'use client';
 
 import AddModal from '@/components/AddModal';
-import StatusSelect from '@/components/StatusSelect';
+import LogTable from '@/components/LogTable';
 import { Application } from '@/model/type';
 import { useState } from 'react';
 
@@ -55,20 +55,7 @@ const mockApplications: Application[] = [
 export default function Home() {
   const [open, setOpen] = useState<boolean>(false);
   const [data, setData] = useState<Application[]>(mockApplications);
-  const onStatusChangeHandler = (
-    e: React.ChangeEvent<HTMLSelectElement>,
-    id?: string,
-  ) => {
-    if (!id) return;
 
-    const nextStatus = e.target.value as Application['status'];
-
-    setData((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, status: nextStatus } : item,
-      ),
-    );
-  };
   return (
     <div className='w-1/2 min-w-96'>
       <div className='flex justify-between'>
@@ -108,44 +95,7 @@ export default function Home() {
         </div>
       </div>
       <div>
-        <table>
-          <thead>
-            <tr>
-              <th>회사명</th>
-              <th>포지션</th>
-              <th>지원현황</th>
-              <th>지원일</th>
-              <th>채용공고</th>
-              <th>메모</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((ele) => (
-              <tr key={ele.id}>
-                <td>{ele.companyName}</td>
-                <td>{ele.position}</td>
-                <td>
-                  <StatusSelect
-                    onChangeHandler={onStatusChangeHandler}
-                    defaultValue={ele.status}
-                  />
-                </td>
-                <td>{ele.appliedAt}</td>
-                <td>
-                  <a href={ele.jobPostUrl} target='_blank'>
-                    🔗
-                  </a>
-                </td>
-                <td>{ele.memo}</td>
-                <td>
-                  <button>수정</button>
-                  <button>삭제</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <LogTable data={data} setData={setData} />
       </div>
       {open && <AddModal setOpen={setOpen} setData={setData} />}
     </div>
