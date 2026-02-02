@@ -15,6 +15,7 @@ const StatusSelect = ({
       defaultValue={defaultValue}
       name='status'
       onChange={onChangeHandler}
+      className='bg-transparent'
     >
       <option value='지원'>지원</option>
       <option value='과제'>과제</option>

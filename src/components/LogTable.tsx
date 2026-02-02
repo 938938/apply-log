@@ -1,4 +1,4 @@
-import { Application } from '@/model/type';
+import { Application, ApplicationStatus } from '@/model/type';
 import StatusSelect from './StatusSelect';
 
 const LogTable = ({
@@ -22,9 +22,19 @@ const LogTable = ({
       ),
     );
   };
+
   const onDeleteHandler = (id: string) => {
     setData((prev) => prev.filter((item) => item.id !== id));
   };
+
+  const statusBgMap: Record<ApplicationStatus, string> = {
+    지원: 'bg-blue-50',
+    과제: 'bg-yellow-50',
+    면접: 'bg-purple-50',
+    합격: 'bg-green-50',
+    탈락: 'bg-red-50',
+  };
+  
   return (
     <table>
       <thead>
@@ -40,7 +50,7 @@ const LogTable = ({
       </thead>
       <tbody>
         {data.map((ele) => (
-          <tr key={ele.id}>
+          <tr key={ele.id} className={statusBgMap[ele.status]}>
             <td>{ele.companyName}</td>
             <td>{ele.position}</td>
             <td>
