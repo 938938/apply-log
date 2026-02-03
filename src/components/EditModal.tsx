@@ -4,20 +4,24 @@ import { Application } from '@/model/type';
 import { useState } from 'react';
 import StatusSelect from './StatusSelect';
 
-const AddModal = ({
+const EditModal = ({
   setOpen,
   setData,
+  type,
+  prevData,
 }: {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setData: React.Dispatch<React.SetStateAction<Application[]>>;
+  type: '생성' | '수정';
+  prevData?: Application;
 }) => {
   const [form, setForm] = useState<Omit<Application, 'id'>>({
-    companyName: '',
-    position: '',
-    jobPostUrl: '',
-    status: '지원',
-    appliedAt: '',
-    memo: '',
+    companyName: prevData?.companyName || '',
+    position: prevData?.position || '',
+    jobPostUrl: prevData?.jobPostUrl || '',
+    status: prevData?.status || '지원',
+    appliedAt: prevData?.appliedAt || '',
+    memo: prevData?.memo || '',
   });
 
   const onChangeHandler = (
@@ -27,7 +31,7 @@ const AddModal = ({
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const onClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const onAddHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     const newApplication: Application = {
@@ -38,6 +42,16 @@ const AddModal = ({
     setData((prev) => [...prev, newApplication]);
     setOpen(false);
   };
+
+  const onEditHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (!prevData) return;
+    setData((prev) =>
+      prev.map((ele) => (ele.id === prevData.id ? { ...ele, ...form } : ele)),
+    );
+    setOpen(false);
+  };
+
   return (
     <div className='fixed inset-0 z-50 flex items-center justify-center'>
       <div
@@ -45,40 +59,60 @@ const AddModal = ({
         onClick={() => setOpen(false)}
       />
       <div className='relative z-10 w-[90%] max-w-md rounded-lg bg-white p-6 shadow-lg'>
-        <h2 className='text-lg font-semibold mb-4'>지원내역 추가</h2>
+        <h2 className='text-lg font-semibold mb-4'>
+          지원내역 {type === '생성' ? '추가' : '수정'}
+        </h2>
 
         <form>
           <div>
             <label>회사명</label>
-            <input name='companyName' required onChange={onChangeHandler} />
+            <input
+              name='companyName'
+              value={form.companyName}
+              required
+              onChange={onChangeHandler}
+            />
           </div>
 
           <div>
             <label>직무</label>
-            <input name='position' onChange={onChangeHandler} />
+            <input
+              name='position'
+              value={form.position}
+              onChange={onChangeHandler}
+            />
           </div>
 
           <div>
             <label>공고 링크</label>
-            <input name='jobPostUrl' onChange={onChangeHandler} />
+            <input
+              name='jobPostUrl'
+              value={form.jobPostUrl}
+              onChange={onChangeHandler}
+            />
           </div>
 
           <div>
             <label>지원상태</label>
             <StatusSelect
               onChangeHandler={onChangeHandler}
-              defaultValue='지원'
+              defaultValue={form.status}
             />
           </div>
 
           <div>
             <label>지원날짜</label>
-            <input type='date' name='appliedAt' onChange={onChangeHandler} />
+            <input
+              type='date'
+              name='appliedAt'
+              value={form.appliedAt}
+              onChange={onChangeHandler}
+            />
           </div>
 
           <div>
             <label>메모</label>
-            <input name='memo' onChange={onChangeHandler} />
+            <input name='memo' value={form.memo} onChange={onChangeHandler} />
           </div>
 
           <div className='flex justify-end gap-2'>
@@ -92,7 +126,7 @@ const AddModal = ({
 
             <button
               className='px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700'
-              onClick={onClickHandler}
+              onClick={type === '생성' ? onAddHandler : onEditHandler}
             >
               확인
             </button>
@@ -103,4 +137,4 @@ const AddModal = ({
   );
 };
 
-export default AddModal;
+export default EditModal;

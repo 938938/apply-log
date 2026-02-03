@@ -1,6 +1,6 @@
 'use client';
 
-import AddModal from '@/components/AddModal';
+import EditModal from '@/components/EditModal';
 import LogTable from '@/components/LogTable';
 import { Application } from '@/model/type';
 import { useState } from 'react';
@@ -97,7 +97,7 @@ export default function Home() {
       <div>
         <LogTable data={data} setData={setData} />
       </div>
-      {open && <AddModal setOpen={setOpen} setData={setData} />}
+      {open && <EditModal setOpen={setOpen} setData={setData} type='생성' />}
     </div>
   );
 }

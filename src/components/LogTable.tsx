@@ -1,5 +1,9 @@
+'use client';
+
 import { Application, ApplicationStatus } from '@/model/type';
 import StatusSelect from './StatusSelect';
+import EditModal from './EditModal';
+import { useState } from 'react';
 
 const LogTable = ({
   data,
@@ -8,6 +12,7 @@ const LogTable = ({
   data: Application[];
   setData: React.Dispatch<React.SetStateAction<Application[]>>;
 }) => {
+  const [editingItem, setEditingItem] = useState<Application | null>(null);
   const onStatusChangeHandler = (
     e: React.ChangeEvent<HTMLSelectElement>,
     id?: string,
@@ -34,7 +39,7 @@ const LogTable = ({
     합격: 'bg-green-50',
     탈락: 'bg-red-50',
   };
-  
+
   return (
     <table>
       <thead>
@@ -67,12 +72,20 @@ const LogTable = ({
             </td>
             <td>{ele.memo}</td>
             <td>
-              <button>수정</button>
+              <button onClick={() => setEditingItem(ele)}>수정</button>
               <button onClick={() => onDeleteHandler(ele.id)}>삭제</button>
             </td>
           </tr>
         ))}
       </tbody>
+      {editingItem && (
+        <EditModal
+          setOpen={() => setEditingItem(null)}
+          setData={setData}
+          prevData={editingItem}
+          type='수정'
+        />
+      )}
     </table>
   );
 };
