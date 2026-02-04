@@ -33,6 +33,7 @@ const LogTable = ({
   };
 
   const statusBgMap: Record<ApplicationStatus, string> = {
+    전부: '',
     지원: 'bg-blue-50',
     과제: 'bg-yellow-50',
     면접: 'bg-purple-50',
