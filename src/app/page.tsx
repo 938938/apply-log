@@ -62,7 +62,14 @@ export default function Home() {
     return data.filter((item) => item.status === filter);
   }, [data, filter]);
 
-  const StatusList = ['전부', '지원', '과제', '면접', '합격', '탈락'];
+  const StatusList: ApplicationStatus[] = [
+    '전부',
+    '지원',
+    '과제',
+    '면접',
+    '합격',
+    '탈락',
+  ];
 
   return (
     <div className='w-1/2 min-w-96'>
@@ -95,12 +102,11 @@ export default function Home() {
         </div>
       </div>
       <div>
-        <button onClick={() => setFilter('전부')}>전체</button>
-        <button onClick={() => setFilter('지원')}>지원</button>
-        <button onClick={() => setFilter('과제')}>과제</button>
-        <button onClick={() => setFilter('면접')}>면접</button>
-        <button onClick={() => setFilter('합격')}>합격</button>
-        <button onClick={() => setFilter('탈락')}>탈락</button>
+        {StatusList.map((status) => (
+          <button key={status} onClick={() => setFilter(status)}>
+            {status}
+          </button>
+        ))}
       </div>
       <div>
         <LogTable data={filteredData} setData={setData} />
