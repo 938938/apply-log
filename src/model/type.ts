@@ -1,4 +1,10 @@
-export type ApplicationStatus = '지원' | '과제' | '면접' | '합격' | '탈락';
+export type ApplicationStatus =
+  | '전부'
+  | '지원'
+  | '과제'
+  | '면접'
+  | '합격'
+  | '탈락';
 
 export type Application = {
   id: string;

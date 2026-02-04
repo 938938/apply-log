@@ -2,8 +2,8 @@
 
 import EditModal from '@/components/EditModal';
 import LogTable from '@/components/LogTable';
-import { Application } from '@/model/type';
-import { useState } from 'react';
+import { Application, ApplicationStatus } from '@/model/type';
+import { useMemo, useState } from 'react';
 
 const mockApplications: Application[] = [
   {
@@ -55,20 +55,20 @@ const mockApplications: Application[] = [
 export default function Home() {
   const [open, setOpen] = useState<boolean>(false);
   const [data, setData] = useState<Application[]>(mockApplications);
+  const [filter, setFilter] = useState<ApplicationStatus>('전부');
+
+  const filteredData = useMemo(() => {
+    if (filter === '전부') return data;
+    return data.filter((item) => item.status === filter);
+  }, [data, filter]);
+
+  const StatusList = ['전부', '지원', '과제', '면접', '합격', '탈락'];
 
   return (
     <div className='w-1/2 min-w-96'>
       <div className='flex justify-between'>
         <h1>Apply Log</h1>
         <button onClick={() => setOpen(true)}>추가</button>
-      </div>
-      <div>
-        <button>전체</button>
-        <button>지원</button>
-        <button>과제</button>
-        <button>면접</button>
-        <button>합격</button>
-        <button>탈락</button>
       </div>
       <div className='flex'>
         <div>
@@ -95,7 +95,15 @@ export default function Home() {
         </div>
       </div>
       <div>
-        <LogTable data={data} setData={setData} />
+        <button onClick={() => setFilter('전부')}>전체</button>
+        <button onClick={() => setFilter('지원')}>지원</button>
+        <button onClick={() => setFilter('과제')}>과제</button>
+        <button onClick={() => setFilter('면접')}>면접</button>
+        <button onClick={() => setFilter('합격')}>합격</button>
+        <button onClick={() => setFilter('탈락')}>탈락</button>
+      </div>
+      <div>
+        <LogTable data={filteredData} setData={setData} />
       </div>
       {open && <EditModal setOpen={setOpen} setData={setData} type='생성' />}
     </div>
