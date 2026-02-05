@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import ReduxToolkitProvider from '@/config/ReduxToolkitProvider';
 
 export const metadata: Metadata = {
   title: 'Apply Log',
@@ -13,7 +14,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='ko'>
-      <body className='flex justify-center'>{children}</body>
+      <ReduxToolkitProvider>
+        <body className='flex justify-center'>{children}</body>
+      </ReduxToolkitProvider>
     </html>
   );
 }
