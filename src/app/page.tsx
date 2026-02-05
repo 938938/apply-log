@@ -3,7 +3,12 @@
 import EditModal from '@/components/EditModal';
 import LogTable from '@/components/LogTable';
 import { Application, ApplicationStatus } from '@/model/type';
-import { useMemo, useState } from 'react';
+import { loadData } from '@/utils/actions/storages';
+import { setData } from '@/utils/redux/applicationSlice';
+import { useAppDispatch } from '@/utils/redux/hooks';
+import { RootState } from '@/utils/redux/store';
+import { useEffect, useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 const mockApplications: Application[] = [
   {
@@ -53,8 +58,14 @@ const mockApplications: Application[] = [
 ];
 
 export default function Home() {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    const storage = loadData();
+    dispatch(setData(storage));
+  }, [dispatch]);
+  const data = useSelector((state: RootState) => state.application);
+
   const [open, setOpen] = useState<boolean>(false);
-  const [data, setData] = useState<Application[]>(mockApplications);
   const [filter, setFilter] = useState<ApplicationStatus>('전부');
 
   const filteredData = useMemo(() => {
@@ -109,9 +120,9 @@ export default function Home() {
         ))}
       </div>
       <div>
-        <LogTable data={filteredData} setData={setData} />
+        <LogTable data={filteredData} />
       </div>
-      {open && <EditModal setOpen={setOpen} setData={setData} type='생성' />}
+      {open && <EditModal setOpen={setOpen} type='생성' />}
     </div>
   );
 }

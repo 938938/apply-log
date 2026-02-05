@@ -3,18 +3,22 @@
 import { Application } from '@/model/type';
 import { useState } from 'react';
 import StatusSelect from './StatusSelect';
+import { useAppDispatch } from '@/utils/redux/hooks';
+import {
+  addApplication,
+  updateApplication,
+} from '@/utils/redux/applicationSlice';
 
 const EditModal = ({
   setOpen,
-  setData,
   type,
   prevData,
 }: {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setData: React.Dispatch<React.SetStateAction<Application[]>>;
   type: '생성' | '수정';
   prevData?: Application;
 }) => {
+  const dispatch = useAppDispatch();
   const [form, setForm] = useState<Omit<Application, 'id'>>({
     companyName: prevData?.companyName || '',
     position: prevData?.position || '',
@@ -38,17 +42,15 @@ const EditModal = ({
       id: crypto.randomUUID(),
       ...form,
     };
-
-    setData((prev) => [...prev, newApplication]);
+    dispatch(addApplication(newApplication));
     setOpen(false);
   };
 
   const onEditHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (!prevData) return;
-    setData((prev) =>
-      prev.map((ele) => (ele.id === prevData.id ? { ...ele, ...form } : ele)),
-    );
+    const updated = { ...prevData, ...form };
+    dispatch(updateApplication(updated));
     setOpen(false);
   };
 

@@ -4,32 +4,27 @@ import { Application, ApplicationStatus } from '@/model/type';
 import StatusSelect from './StatusSelect';
 import EditModal from './EditModal';
 import { useState } from 'react';
+import { useAppDispatch } from '@/utils/redux/hooks';
+import {
+  deleteApplication,
+  updateApplication,
+} from '@/utils/redux/applicationSlice';
 
-const LogTable = ({
-  data,
-  setData,
-}: {
-  data: Application[];
-  setData: React.Dispatch<React.SetStateAction<Application[]>>;
-}) => {
+const LogTable = ({ data }: { data: Application[] }) => {
+  const dispatch = useAppDispatch();
   const [editingItem, setEditingItem] = useState<Application | null>(null);
   const onStatusChangeHandler = (
     e: React.ChangeEvent<HTMLSelectElement>,
-    id?: string,
+    data: Application,
   ) => {
-    if (!id) return;
-
     const nextStatus = e.target.value as Application['status'];
+    const updated = { ...data, status: nextStatus };
 
-    setData((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, status: nextStatus } : item,
-      ),
-    );
+    dispatch(updateApplication(updated));
   };
 
   const onDeleteHandler = (id: string) => {
-    setData((prev) => prev.filter((item) => item.id !== id));
+    dispatch(deleteApplication(id));
   };
 
   const statusBgMap: Record<ApplicationStatus, string> = {
@@ -61,7 +56,7 @@ const LogTable = ({
             <td>{ele.position}</td>
             <td>
               <StatusSelect
-                onChangeHandler={(e) => onStatusChangeHandler(e, ele.id)}
+                onChangeHandler={(e) => onStatusChangeHandler(e, ele)}
                 defaultValue={ele.status}
               />
             </td>
@@ -82,7 +77,6 @@ const LogTable = ({
       {editingItem && (
         <EditModal
           setOpen={() => setEditingItem(null)}
-          setData={setData}
           prevData={editingItem}
           type='수정'
         />
