@@ -83,7 +83,7 @@ export default function Home() {
   ];
 
   return (
-    <div className='w-1/2 min-w-96'>
+    <div className='w-3/5 min-w-96 bg-white rounded-lg mt-0 sm:mt-5 p-5'>
       <div className='flex justify-between'>
         <h1>Apply Log</h1>
         <button onClick={() => setOpen(true)}>추가</button>

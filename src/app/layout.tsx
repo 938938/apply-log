@@ -15,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang='ko'>
       <ReduxToolkitProvider>
-        <body className='flex justify-center'>{children}</body>
+        <body className='flex justify-center bg-gray-100'>{children}</body>
       </ReduxToolkitProvider>
     </html>
   );
